@@ -8,6 +8,8 @@ export const siteConfig = {
   whatsappDisplay: "(47) 9 9988-0544",
   whatsappDefaultMessage:
     "Olá! Vim pelo site e preciso de um orçamento de manutenção.",
+  // Pixel do ChatGPT Ads (OpenAI). NEXT_PUBLIC_OPENAI_PIXEL_ID sobrescreve.
+  openaiPixelId: process.env.NEXT_PUBLIC_OPENAI_PIXEL_ID || "1dDWqgJ1RCrZXVjQsbyjLZ",
   phone: "554730540100",
   phoneDisplay: "(47) 3054-0100",
   email: "contato@dancomotores.com.br",

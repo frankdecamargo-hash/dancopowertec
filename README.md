@@ -77,7 +77,8 @@ capturados na chegada ao site e gravados junto com o lead.
 
 ## Pendências com o cliente
 
-- [ ] IDs de conversão do Google Ads e pixel do ChatGPT Ads da conta Danco
+- [ ] IDs de conversão do Google Ads da conta Danco
+- [ ] Desligar o `debug` do pixel do ChatGPT Ads após validar
 - [ ] Vídeo institucional (Fillmes) → `institutionalVideoId` no site-config
 - [ ] Shorts da fábrica (Fillmes) → `VideoReels.tsx`
 - [ ] Logos oficiais de Positivo, Automatique, Grupo Cometa, EZA e Bufom

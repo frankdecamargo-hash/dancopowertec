@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/site-config";
+
 // Atribuição de campanha e eventos de conversão (Google Ads, ChatGPT Ads, GTM).
 // Tudo roda só no navegador e é opcional: sem as variáveis de ambiente,
 // os eventos apenas vão para o dataLayer.
@@ -152,7 +154,7 @@ export function trackLeadConversion(eventId: string, status: string) {
     } catch {}
   }
 
-  const pixelId = process.env.NEXT_PUBLIC_OPENAI_PIXEL_ID;
+  const pixelId = siteConfig.openaiPixelId;
   if (pixelId) {
     try {
       ensureOpenAIPixel(pixelId)(
