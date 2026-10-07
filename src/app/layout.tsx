@@ -16,9 +16,9 @@ const barlow = Barlow_Condensed({
   weight: ["500", "600", "700", "800"],
 });
 
-// Defina NEXT_PUBLIC_GTM_ID (ex.: GTM-XXXXXXX) no ambiente de produção para
-// ativar o Google Tag Manager (conversões do Google Ads, GA4, cliques no WhatsApp).
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+// Google Tag Manager (conversões do Google Ads, GA4, cliques no WhatsApp).
+// NEXT_PUBLIC_GTM_ID permite trocar o container sem mexer no código.
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-PTDTSVJK";
 
 // Meta Pixel (Facebook/Instagram Ads).
 const META_PIXEL_ID = "1310133514653481";
@@ -113,11 +113,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${jakarta.variable} ${barlow.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-primary-900">
-        {GTM_ID && (
-          <Script id="gtm" strategy="afterInteractive">
-            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
-          </Script>
-        )}
+        {/* Google Tag Manager (noscript), logo após a abertura do <body> */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {/* GTM no <head>, o mais cedo possível (beforeInteractive) */}
+        <Script id="gtm" strategy="beforeInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
+        </Script>
         <Script id="meta-pixel" strategy="afterInteractive">
           {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
         </Script>

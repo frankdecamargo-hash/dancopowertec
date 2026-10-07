@@ -25,6 +25,15 @@ npm run build
 | Texto para IAs (ChatGPT etc.) | `public/llms.txt` |
 | Perguntas do formulário de orçamento e regra de MQL | `src/lib/lead-form.ts` |
 
+## Tags instaladas
+
+- **Google Tag Manager** `GTM-PTDTSVJK` no `<head>` + `noscript` no `<body>` (`src/app/layout.tsx`).
+  Pode ser trocado por `NEXT_PUBLIC_GTM_ID` sem mexer no código.
+- **Meta Pixel** `1310133514653481` com PageView em todas as páginas.
+
+Para medir os cliques no WhatsApp pelo GTM: acionador "Clique - Apenas links"
+com URL do clique contendo `api.whatsapp.com`.
+
 ## CTAs
 
 Todos os CTAs abrem o WhatsApp (47) 9 9988-0544 com uma mensagem pronta,
@@ -58,7 +67,7 @@ Variáveis em `.env.example`:
 
 - `NEXT_PUBLIC_GOOGLE_ADS_ID` + `NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL`: conversão do Google Ads no envio.
 - `NEXT_PUBLIC_OPENAI_PIXEL_ID`: evento `lead_created` do ChatGPT Ads no envio.
-- `NEXT_PUBLIC_GTM_ID`: Google Tag Manager. Eventos no dataLayer: `lead_form_start`,
+- `NEXT_PUBLIC_GTM_ID`: troca o container do GTM (padrão `GTM-PTDTSVJK`). Eventos no dataLayer: `lead_form_start`,
   `lead_disqualified`, `lead_submit` (com `lead_status`) e `whatsapp_click`.
 - A URL do obrigado recebe `?conversao=obrigado&status=mql|lead`, útil para conversão por URL.
 
