@@ -166,3 +166,22 @@ export function trackLeadConversion(eventId: string, status: string) {
     } catch {}
   }
 }
+
+// Clique em qualquer link de WhatsApp do site: conta como lead no ChatGPT Ads
+// e vai para o dataLayer (GTM) com o texto do botão clicado.
+export function trackWhatsAppClick(link: HTMLAnchorElement) {
+  const eventId = createEventId("whatsapp");
+  pushEvent("whatsapp_click", {
+    event_id: eventId,
+    cta_text: (link.textContent || link.getAttribute("aria-label") || "").trim(),
+  });
+
+  try {
+    ensureOpenAIPixel(siteConfig.openaiPixelId)(
+      "measure",
+      "lead_created",
+      { type: "customer_action" },
+      { event_id: eventId }
+    );
+  } catch {}
+}

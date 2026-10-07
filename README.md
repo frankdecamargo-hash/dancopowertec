@@ -31,8 +31,11 @@ npm run build
   Pode ser trocado por `NEXT_PUBLIC_GTM_ID` sem mexer no código.
 - **Meta Pixel** `1310133514653481` com PageView em todas as páginas.
 
-Para medir os cliques no WhatsApp pelo GTM: acionador "Clique - Apenas links"
-com URL do clique contendo `api.whatsapp.com`.
+Clique em qualquer link de WhatsApp (`src/components/WhatsAppClickTracker.tsx`):
+
+- dispara `lead_created` (customer_action) no pixel do ChatGPT Ads, com `event_id` único;
+- envia o evento `whatsapp_click` (com `cta_text`) para o dataLayer, para usar como
+  acionador de Evento personalizado no GTM (conversões do Google Ads, Meta etc.).
 
 ## CTAs
 

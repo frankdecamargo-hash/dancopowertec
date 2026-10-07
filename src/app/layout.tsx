@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Plus_Jakarta_Sans, Barlow_Condensed } from "next/font/google";
 import AttributionCapture from "@/components/AttributionCapture";
+import WhatsAppClickTracker from "@/components/WhatsAppClickTracker";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -149,6 +150,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <AttributionCapture />
+        <WhatsAppClickTracker />
         {children}
       </body>
     </html>
