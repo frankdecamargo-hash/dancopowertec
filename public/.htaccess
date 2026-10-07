@@ -1,0 +1,14 @@
+# Cache da hospedagem (Apache atrás do nginx).
+# O HTML precisa ser revalidado a cada acesso: senão o servidor continua
+# entregando a página antiga depois de um deploy (tags e pixels novos somem).
+# Os arquivos de /_next/static têm hash no nome e podem ficar em cache longo.
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|txt|xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
