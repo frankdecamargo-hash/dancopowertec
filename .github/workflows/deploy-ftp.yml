@@ -1,0 +1,48 @@
+name: Deploy via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+# Evita dois deploys simultâneos sobrescrevendo arquivos no servidor.
+concurrency:
+  group: deploy-ftp
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Export estático: gera a pasta out/ (next.config.ts usa output: "export").
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_LEADS_ENDPOINT: ${{ vars.NEXT_PUBLIC_LEADS_ENDPOINT }}
+          NEXT_PUBLIC_GTM_ID: ${{ vars.NEXT_PUBLIC_GTM_ID }}
+          NEXT_PUBLIC_GOOGLE_ADS_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_ADS_ID }}
+          NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL: ${{ vars.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL }}
+          NEXT_PUBLIC_OPENAI_PIXEL_ID: ${{ vars.NEXT_PUBLIC_OPENAI_PIXEL_ID }}
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          protocol: ftp
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
