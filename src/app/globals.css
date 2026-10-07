@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0d1014;
+
+  /* Grafite industrial */
+  --color-primary-50: #f5f6f7;
+  --color-primary-100: #e8eaed;
+  --color-primary-200: #d0d4d9;
+  --color-primary-300: #aab1ba;
+  --color-primary-400: #7d8793;
+  --color-primary-500: #5b6571;
+  --color-primary-600: #444d58;
+  --color-primary-700: #333a44;
+  --color-primary-800: #22282f;
+  --color-primary-900: #171b21;
+  --color-primary-950: #0d1014;
+
+  /* Laranja Powertec */
+  --color-accent-300: #ffa36f;
+  --color-accent-400: #ff7a3d;
+  --color-accent-500: #f05a1a;
+  --color-accent-600: #c94510;
+
+  /* Amarelo de sinalização (piso da fábrica / ponte rolante) */
+  --color-signal-400: #ffc629;
+  --color-signal-500: #f5b400;
+
+  --color-sand-50: #f8f8f7;
+  --color-sand-100: #efefed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  --color-accent-300: var(--color-accent-300);
+  --color-accent-400: var(--color-accent-400);
+  --color-accent-500: var(--color-accent-500);
+  --color-accent-600: var(--color-accent-600);
+
+  --color-signal-400: var(--color-signal-400);
+  --color-signal-500: var(--color-signal-500);
+
+  --color-sand-50: var(--color-sand-50);
+  --color-sand-100: var(--color-sand-100);
+
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-barlow);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+/* Textura sutil de grade técnica para fundos escuros */
+.bg-blueprint {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Entrada de cada etapa do formulário de orçamento */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--marquee-distance, -33.3333%));
+  }
+}
+
+.animate-marquee {
+  animation: marquee-x 55s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marquee-x 40s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-fast:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-fast {
+    animation: none;
+  }
+}
+
+@keyframes stat-highlight {
+  0%,
+  3% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  8%,
+  17% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  22%,
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes stat-dot {
+  0%,
+  3% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  8%,
+  17% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  22%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+.animate-stat-highlight {
+  animation: stat-highlight 15s ease-in-out infinite;
+}
+
+.animate-stat-dot {
+  animation: stat-dot 15s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stat-highlight,
+  .animate-stat-dot {
+    animation: none;
+    opacity: 0;
+  }
+
+  .animate-stat-highlight:first-child,
+  .animate-stat-dot:first-child {
+    opacity: 1;
+  }
+}
